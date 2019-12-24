@@ -1,0 +1,12 @@
+FROM docker:19.03.2
+
+RUN apk update \
+    && apk add ansible \
+    py-pip \
+    curl \ 
+    && pip3 install awscli \
+    openshift \
+    && curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl \
+    && chmod +x ./kubectl \
+    && mv ./kubectl /usr/local/bin/kubectl
+

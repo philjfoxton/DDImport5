@@ -1,0 +1,28 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+
+RUN apt update -y \
+    && apt upgrade -y \
+    && apt install -y \
+    ruby-full \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common \
+    python-pip \
+    libz-dev \
+    && gem install xcop \
+    && dotnet tool install -g dotnet-format \
+    && curl -L https://github.com/docker/compose/releases/download/1.24.0/docker-compose-Linux-x86_64 > /usr/local/bin/docker-compose 
+
+RUN apt update -y \
+    && apt install -y \
+    docker.io 
+    
+RUN pip install \
+    awscli \
+    ansible \
+    ansible-lint \
+    --upgrade \
+    && apt clean -y    
+
+ENV PATH=$PATH:~/.local/bin:~/.dotnet/tools
